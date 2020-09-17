@@ -1,5 +1,6 @@
 var express = require('express');
 const axios = require('axios').default;
+const mailer=require('./mail');
 
 var router = express.Router();
 
@@ -15,7 +16,8 @@ router.post('/cryptoprice', (req, res) =>
     var url='https://api.coincap.io/v2/assets/'+cryptoCurrencyId;
 
     var temp= axios.get(url).then(function (response) {
-      res.send(response.data.data.priceUsd);
+      price_asset=response.data.data.priceUsd;
+      res.send(price_asset);
     })
 });
 
