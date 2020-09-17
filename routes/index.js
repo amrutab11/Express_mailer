@@ -17,9 +17,24 @@ router.post('/cryptoprice', (req, res) =>
 
     var temp= axios.get(url).then(function (response) {
       price_asset=response.data.data.priceUsd;
-      res.send(price_asset);
+
+      var mailData={
+        recepient:email,
+        assetId:cryptoCurrencyId,
+        priceasset : price_asset
+      }
+      
+      mailer.sendMail(mailData,(cb)=>{
+        if(cb.success){
+          res.status(200).json({success:true, message:"Email has been sent"});
+        }else{
+          res.status(500).jos({
+            success:false,
+            message: cb.message
+          });
+        }
+      });
     })
 });
-
 
 module.exports = router;
