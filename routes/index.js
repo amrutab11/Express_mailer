@@ -12,9 +12,10 @@ router.post('/cryptoprice', (req, res) =>
 {
     cryptoCurrencyId= req.body.cryptoCurrencyId;
     email= req.body.email;
-    //res.send(cryptoCurrencyId);
-    var temp= axios.get('https://api.coincap.io/v2/assets/ethereum').then(function (response) {
-       console.log(response);
+    var url='https://api.coincap.io/v2/assets/'+cryptoCurrencyId;
+
+    var temp= axios.get(url).then(function (response) {
+      res.send(response.data.data.priceUsd);
     })
 });
 
